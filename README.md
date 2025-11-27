@@ -114,6 +114,47 @@ GET /api/auth/me
 Authorization: Bearer <token>
 ```
 
+### Task Routes
+
+#### Create Task
+```http
+POST /api/tasks
+Content-Type: application/json
+
+{
+  "title": "Task title",
+  "description": "Optional description",
+  "completed": false
+}
+```
+
+#### List Tasks
+```http
+GET /api/tasks
+```
+
+#### Get Task
+```http
+GET /api/tasks/:id
+```
+
+#### Update Task
+```http
+PUT /api/tasks/:id
+Content-Type: application/json
+
+{
+  "title": "New title",
+  "completed": true
+}
+```
+
+#### Delete Task
+```http
+DELETE /api/tasks/:id
+```
+
+
 ## Docker
 
 ### Build Image

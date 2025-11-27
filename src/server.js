@@ -13,8 +13,9 @@ app.get('/', (req, res) => {
   res.send('API is running...');
 });
 
-// Import and use Auth Routes
+// Import and use Auth & Task Routes
 app.use('/api/auth', require('./routes/auth'));
+app.use('/api/tasks', require('./routes/tasks'));
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
@@ -30,4 +31,9 @@ app.use((err, req, res, next) => {
 // Define PORT
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
+// Start server only when run directly (allow importing app in tests)
+if (require.main === module) {
+  app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
+}
+
+module.exports = app;
