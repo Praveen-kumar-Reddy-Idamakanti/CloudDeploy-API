@@ -1,6 +1,6 @@
 // src/server.js
 const express = require('express');
-const db = require('./config/db');
+require('./config/db');
 require('dotenv').config();
 
 const app = express();
@@ -23,6 +23,7 @@ app.get('/api/health', (req, res) => {
 });
 
 // Error handling middleware
+/* eslint-disable-next-line no-unused-vars */
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({ message: 'Something went wrong!' });

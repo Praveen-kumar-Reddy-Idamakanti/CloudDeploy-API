@@ -4,30 +4,26 @@ const db = require('../config/db');
 
 class User {
   static async create(name, email, password) {
-    try {
-      const salt = await bcrypt.genSalt(10);
-      const hashedPassword = await bcrypt.hash(password, salt);
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
 
-      return new Promise((resolve, reject) => {
-        db.run(
-          'INSERT INTO users (name, email, password) VALUES (?, ?, ?)',
-          [name, email, hashedPassword],
-          function (err) {
-            if (err) {
-              reject(err);
-            } else {
-              resolve({
-                id: this.lastID,
-                name,
-                email,
-              });
-            }
+    return new Promise((resolve, reject) => {
+      db.run(
+        'INSERT INTO users (name, email, password) VALUES (?, ?, ?)',
+        [name, email, hashedPassword],
+        function (err) {
+          if (err) {
+            reject(err);
+          } else {
+            resolve({
+              id: this.lastID,
+              name,
+              email,
+            });
           }
-        );
-      });
-    } catch (error) {
-      throw error;
-    }
+        }
+      );
+    });
   }
 
   static async findByEmail(email) {
