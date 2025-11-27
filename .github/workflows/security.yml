@@ -1,0 +1,31 @@
+name: Security Scan
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  security:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Run npm audit
+      run: npm audit --audit-level=moderate
+    
+    - name: Dependency check
+      uses: dependency-check/Dependency-Check_Action@main
+      with:
+        path: '.'
+        format: 'JSON'
+      continue-on-error: true
+    
+    - name: Upload Dependency Check results
+      uses: actions/upload-artifact@v3
+      with:
+        name: dependency-check-report
+        path: reports/
+      if: always()
